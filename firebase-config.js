@@ -1,15 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+// Firebase configuration for JARVIS AI
 
-import {
-  getAuth
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAH7aKhGIKz9o3x7B4fS_6-39sW9-IDYsU",
+export const firebaseConfig = {
+  apiKey: "YAHAN_APNI_FIREBASE_API_KEY",
   authDomain: "jarvis-personal-ai-5cd50.firebaseapp.com",
   projectId: "jarvis-personal-ai-5cd50",
   storageBucket: "jarvis-personal-ai-5cd50.firebasestorage.app",
@@ -18,8 +10,4 @@ const firebaseConfig = {
   measurementId: "G-5WJGN4LRQR"
 };
 
-const app = initializeApp(firebaseConfig);
-
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export default app;
+export const CONFIGURED = true;
