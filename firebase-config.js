@@ -1,7 +1,7 @@
 // Firebase configuration for JARVIS AI
 
 export const firebaseConfig = {
-  apiKey: "YAHAN_APNI_FIREBASE_API_KEY",
+  apiKey: "AIzaSyAH7aKhGIKz9o3x7B4fS_6-39sW9-IDYsU",
   authDomain: "jarvis-personal-ai-5cd50.firebaseapp.com",
   projectId: "jarvis-personal-ai-5cd50",
   storageBucket: "jarvis-personal-ai-5cd50.firebasestorage.app",
