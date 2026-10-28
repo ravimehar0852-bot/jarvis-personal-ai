@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050a1a">
+<title>JARVIS AI</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <button id="menu" aria-label="Menu">☰</button>
+  <div class="logo">JARVIS <span>AI</span></div>
+  <span id="status" class="st">online</span>
+  <button id="newchat" aria-label="New conversation">＋</button>
+</header>
+<div id="banner" hidden></div>
+<main>
+  <div class="orb" id="orb"></div>
+  <div id="log" aria-live="polite"></div>
+</main>
+<footer>
+  <div class="opts">
+    <label><input type="checkbox" id="speak"> Speak replies</label>
+    <label><input type="checkbox" id="web"> Web search</label>
+    <select id="lang" aria-label="Voice language"><option value="en-IN">English</option><option value="hi-IN">हिन्दी</option></select>
+  </div>
+  <div class="row">
+    <button id="mic" aria-label="Voice input">🎤</button>
+    <textarea id="input" rows="1" placeholder="Ask JARVIS… (/remember to save a memory)"></textarea>
+    <button id="send">Send</button>
+  </div>
+  <div id="msg"></div>
+</footer>
+
+<aside id="drawer" class="closed">
+  <nav id="tabs">
+    <button data-t="chats" class="on">Chats</button><button data-t="memories">Memory</button>
+    <button data-t="notes">Notes</button><button data-t="reminders">Reminders</button><button data-t="settings">Settings</button>
+  </nav>
+  <section id="p-chats"><div id="l-conversations"></div></section>
+  <section id="p-memories" hidden>
+    <p class="hint">Only what you save here is used as AI context. Nothing is saved automatically.</p>
+    <div class="row"><input id="memIn" placeholder="A fact or preference"><button id="memAdd">Add</button></div>
+    <div id="l-memories"></div><button id="memClear" class="danger">Clear all memories</button>
+  </section>
+  <section id="p-notes" hidden>
+    <div class="row"><input id="noteIn" placeholder="New note"><button id="noteAdd">Add</button></div>
+    <input id="noteSearch" placeholder="Search notes"><div id="l-notes"></div>
+  </section>
+  <section id="p-reminders" hidden>
+    <p class="hint">Alerts appear only while this page is open. Background alerts need separate push setup (not included).</p>
+    <input id="remIn" placeholder="Reminder"><div class="row"><input id="remAt" type="datetime-local"><button id="remAdd">Add</button></div>
+    <button id="remPerm">Enable notifications</button><div id="l-reminders"></div>
+  </section>
+  <section id="p-settings" hidden>
+    <button id="theme">Switch light/dark theme</button>
+    <p id="who" class="hint"></p><button id="logout">Log out</button>
+    <p class="hint">Voice depends on your browser (Android Chrome works best). It is not always-listening. Web search works only if the owner enabled it.</p>
+  </section>
+</aside>
+<div id="scrim" hidden></div>
+
+<div id="auth" hidden>
+  <div class="card">
+    <h2>JARVIS <span>AI</span></h2>
+    <input id="em" type="email" placeholder="Email" autocomplete="email">
+    <input id="pw" type="password" placeholder="Password (min 6)" autocomplete="current-password">
+    <button id="login">Log in</button><button id="reg">Register</button><button id="reset" class="link">Forgot password?</button>
+    <div id="authMsg"></div>
+  </div>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
