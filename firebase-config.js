@@ -1,5 +1,3 @@
-// Firebase configuration for JARVIS AI
-
 export const firebaseConfig = {
   apiKey: "AIzaSyAH7aKhGIKz9o3x7B4fS_6-39sW9-IDYsU",
   authDomain: "jarvis-personal-ai-5cd50.firebaseapp.com",
@@ -9,5 +7,4 @@ export const firebaseConfig = {
   appId: "1:749774207540:web:12c93d1598b274e2ba2861",
   measurementId: "G-5WJGN4LRQR"
 };
-
-export const CONFIGURED = true;
+export const CONFIGURED = !firebaseConfig.apiKey.startsWith("PASTE");
