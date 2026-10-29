@@ -1,63 +1,22 @@
-// api/_auth.js
-// Verify Firebase ID tokens using Google's Identity Toolkit API.
-
+// Verifies the Firebase ID token with Google's REST API (no extra dependencies).
 export async function verifyUser(req) {
-  const fbKey = process.env.FIREBASE_API_KEY;
-
-  const authorization = req.headers.authorization || "";
-  const match = authorization.match(/^Bearer\s+(.+)$/i);
-  const token = match ? match[1].trim() : "";
-
-  if (!fbKey) {
-    return {
-      ok: false,
-      status: 503,
-      error: "Server configuration error: FIREBASE_API_KEY is missing in Vercel."
-    };
-  }
-
-  if (!token) {
-    return {
-      ok: false,
-      status: 401,
-      error: "Please log in to JARVIS again."
-    };
-  }
-
+  const fbKey = (process.env.FIREBASE_API_KEY || "").trim();
+  const token = (req.headers.authorization || "").replace(/^Bearer /, "");
+  if (!fbKey) return { status: 503, error: "Server not configured: FIREBASE_API_KEY missing in Vercel." };
+  if (!token) return { status: 401, error: "Please log in." };
   try {
-    const response = await fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${encodeURIComponent(fbKey)}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          idToken: token
-        })
-      }
-    );
-
-    const result = await response.json().catch(() => ({}));
-
-    if (!response.ok || !Array.isArray(result.users) || !result.users.length) {
-      return {
-        ok: false,
-        status: 401,
-        error: "Login verification failed. Log out and log in again."
-      };
+    const r = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=" + encodeURIComponent(fbKey), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Referer: "https://" + (req.headers.host || "localhost") + "/" },
+      body: JSON.stringify({ idToken: token }),
+    });
+    if (!r.ok) {
+      const j = await r.json().catch(() => ({}));
+      const why = String(j.error?.message || r.status).slice(0, 120);
+      return { status: 401, error: "Login verification failed: " + why };
     }
-
-    return {
-      ok: true,
-      uid: result.users[0].localId,
-      email: result.users[0].email || null
-    };
+    return { ok: true };
   } catch {
-    return {
-      ok: false,
-      status: 502,
-      error: "Could not connect to Firebase for login verification."
-    };
+    return { status: 502, error: "Could not reach Google to verify login." };
   }
 }
