@@ -59,8 +59,10 @@ export default async function handler(req, res) {
     );
     if (!r.ok) {
       const status = r.status === 429 ? 429 : 502;
+      const pj = await r.json().catch(() => ({}));
+      const why = String(pj.error?.message || "").slice(0, 160);
       return res.status(status).json({
-        error: r.status === 429 ? "AI rate limit reached. Try again shortly." : `AI provider error (${r.status}). Check API key and model name.`,
+        error: r.status === 429 ? "AI rate limit reached. Try again shortly." : `AI provider error (${r.status}) [model: ${MODEL}]: ${why}`,
       });
     }
     const j = await r.json();
@@ -74,4 +76,4 @@ export default async function handler(req, res) {
   } finally {
     clearTimeout(timer);
   }
-}
+                                                                  }
